@@ -1223,8 +1223,323 @@
             }, 1000);
         });
     </script>
+    <script>
+    // ==================== CONFIGURATION ====================
+    const CONTRACT_ADDRESS = "0x7a7b06D49129B34976D07B3854d4D72D01588191";
     
-    <!-- Font Awesome Icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    // ABI کامل قرارداد (همونی که گرفتی)
+    const CONTRACT_ABI = [{"inputs":[{"internalType":"address","name":"owner","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"string","name":"message","type":"string"}],"name":"DebugMessage","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"newFee","type":"uint256"}],"name":"EntryFeeUpdated","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"string","name":"poolType","type":"string"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"ManualWithdraw","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"contributor","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"MinerPoolContribution","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"}],"name":"MinerRemoved","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"MinerTokensBought","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"string","name":"poolType","type":"string"}],"name":"NoEligibleUsers","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":true,"internalType":"address","name":"upline","type":"address"},{"indexed":false,"internalType":"uint256","name":"id","type":"uint256"},{"indexed":false,"internalType":"bool","name":"placeOnLeft","type":"bool"}],"name":"Registered","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"id","type":"uint256"}],"name":"UserMigrated","type":"event"},{"inputs":[],"name":"CYCLE_DURATION","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"ENTRY_FEE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MAX_CYCLE_BALANCES","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MINER_BUY_INTERVAL","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"PTOKEN_CONTRACT","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"userId","type":"uint256"}],"name":"_getSpecialUserInfoForMigrateToNewFork","outputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"address","name":"userAddress","type":"address"},{"internalType":"uint256","name":"leftCount","type":"uint256"},{"internalType":"uint256","name":"rightCount","type":"uint256"},{"internalType":"uint256","name":"saveLeft","type":"uint256"},{"internalType":"uint256","name":"saveRight","type":"uint256"},{"internalType":"uint256","name":"balanceCount","type":"uint256"},{"internalType":"address","name":"upline","type":"address"},{"internalType":"uint256","name":"specialBalanceCount","type":"uint256"},{"internalType":"uint256","name":"totalMinerRewards","type":"uint256"},{"internalType":"uint256","name":"entryPrice","type":"uint256"},{"internalType":"bool","name":"isMiner","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address[]","name":"usersToRemove","type":"address[]"}],"name":"batchRemoveMiners","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"buyMinerTokens","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"contributeToMinerPool","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"distributeMinerTokens","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"eligiblePoolUserCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"eligibleSpecialUserCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getMinerStats","outputs":[{"internalType":"uint256","name":"checkedOutPaidCount","type":"uint256"},{"internalType":"uint256","name":"eligibleInProgressCount","type":"uint256"},{"internalType":"uint256","name":"totalRemain","type":"uint256"},{"internalType":"uint256","name":"networkerCount","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"percent","type":"uint256"}],"name":"getMinerStatsByPercent","outputs":[{"internalType":"uint256","name":"usersAbovePercent","type":"uint256"},{"internalType":"uint256","name":"totalRemaining","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getSpecialPoolParticipants","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getTokenPrice","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"userId","type":"uint256"}],"name":"getUserDirects","outputs":[{"internalType":"uint256","name":"leftId","type":"uint256"},{"internalType":"uint256","name":"rightId","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"getUserInfo","outputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"uint256","name":"uplineId","type":"uint256"},{"internalType":"uint256","name":"leftCount","type":"uint256"},{"internalType":"uint256","name":"rightCount","type":"uint256"},{"internalType":"uint256","name":"saveLeft","type":"uint256"},{"internalType":"uint256","name":"saveRight","type":"uint256"},{"internalType":"uint256","name":"balanceCount","type":"uint256"},{"internalType":"uint256","name":"specialBalanceCount","type":"uint256"},{"internalType":"uint256","name":"totalMinerRewards","type":"uint256"},{"internalType":"uint256","name":"entryPrice","type":"uint256"},{"internalType":"bool","name":"isMiner","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint8","name":"day","type":"uint8"}],"name":"isCurrentTimeMatchToDay","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"isPoolWithdrawable","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"lastMinerBuyTime","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"lastPoolWithdrawTime","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"minerPercentage","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"minerTokenPool","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"address","name":"userWallet","type":"address"},{"internalType":"uint256","name":"uplineId","type":"uint256"},{"internalType":"address","name":"leftChildAddress","type":"address"},{"internalType":"address","name":"rightChildAddress","type":"address"},{"internalType":"uint256","name":"oldLeftCount","type":"uint256"},{"internalType":"uint256","name":"oldRightCount","type":"uint256"},{"internalType":"uint256","name":"oldLeftSave","type":"uint256"},{"internalType":"uint256","name":"oldRightSave","type":"uint256"}],"name":"mpu","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"ownerPercentage","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"pendingMinerFunds","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"poolBalance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"poolPercentage","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"poolPointCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"uplineCode","type":"uint256"},{"internalType":"bool","name":"placeOnLeft","type":"bool"}],"name":"register","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"specialPercentage","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"specialPointCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"specialRewardPool","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalUsers","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"newFee","type":"uint256"}],"name":"updateEntryFee","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"userTokenPercentage","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"withdrawPool","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"withdrawSpecials","outputs":[],"stateMutability":"nonpayable","type":"function"}];
+
+    // ==================== GLOBAL VARIABLES ====================
+    let provider = null;
+    let signer = null;
+    let contract = null;
+    let userAddress = null;
+    let isConnected = false;
+
+    // ==================== HELPER FUNCTIONS ====================
+    function showNotification(message, type = 'success', duration = 4000) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.className = `advanced-notification ${type}`;
+        
+        setTimeout(() => notification.classList.add('show'), 10);
+        setTimeout(() => notification.classList.remove('show'), duration);
+    }
+
+    function formatAddress(address) {
+        if (!address) return '---';
+        return address.substring(0, 6) + '...' + address.substring(address.length - 4);
+    }
+
+    function formatMatic(value) {
+        if (!value) return '0.00';
+        const num = parseFloat(ethers.utils.formatEther(value));
+        if (num < 0.001) return '< 0.001';
+        return num.toFixed(3);
+    }
+
+    // ==================== WALLET & CONTRACT CONNECTION ====================
+    async function connectWallet() {
+        console.log('🔄 Connecting wallet and contract...');
+        
+        // تشخیص SafePal
+        let ethereum = window.ethereum;
+        if (!ethereum && window.safepal) {
+            ethereum = window.safepal;
+            window.ethereum = ethereum;
+        }
+        
+        if (!ethereum) {
+            showNotification('❌ لطفاً SafePal را نصب کنید', 'error');
+            return;
+        }
+        
+        try {
+            const connectBtn = document.getElementById('connectBtn');
+            const connectText = document.getElementById('connectText');
+            connectBtn.innerHTML = '<div class="advanced-loader"></div> در حال اتصال...';
+            connectBtn.disabled = true;
+            
+            // اتصال کیف پول
+            const accounts = await ethereum.request({
+                method: 'eth_requestAccounts'
+            });
+            
+            if (accounts.length === 0) {
+                throw new Error('هیچ حسابی انتخاب نشد');
+            }
+            
+            userAddress = accounts[0];
+            console.log('✅ Wallet connected:', userAddress);
+            
+            // راه‌اندازی Provider و Signer
+            provider = new ethers.providers.Web3Provider(ethereum);
+            signer = provider.getSigner();
+            
+            // ساخت قرارداد
+            contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+            console.log('✅ Contract connected');
+            
+            // نمایش پنل کاربر
+            document.getElementById('userPanel').style.display = 'block';
+            document.getElementById('walletAddress').textContent = userAddress;
+            
+            // دریافت اطلاعات از قرارداد
+            await updateContractData();
+            
+            // آپدیت UI
+            connectBtn.innerHTML = '<i class="fas fa-check"></i> <span>متصل شد</span>';
+            connectBtn.style.background = 'linear-gradient(135deg, var(--secondary), #34d399)';
+            connectBtn.disabled = false;
+            
+            showNotification('🎉 کیف پول و قرارداد متصل شدند!', 'success');
+            isConnected = true;
+            
+            // گوش دادن به تغییرات
+            ethereum.on('accountsChanged', (newAccounts) => {
+                if (newAccounts.length > 0) {
+                    userAddress = newAccounts[0];
+                    location.reload();
+                } else {
+                    document.getElementById('userPanel').style.display = 'none';
+                    connectBtn.innerHTML = '<i class="fas fa-plug"></i> <span>اتصال SafePal Wallet</span>';
+                    connectBtn.style.background = 'var(--gradient-primary)';
+                    isConnected = false;
+                }
+            });
+            
+        } catch (error) {
+            console.error('❌ Connection error:', error);
+            
+            const connectBtn = document.getElementById('connectBtn');
+            connectBtn.innerHTML = '<i class="fas fa-plug"></i> <span>اتصال SafePal Wallet</span>';
+            connectBtn.disabled = false;
+            
+            let errorMsg = 'خطا در اتصال';
+            if (error.code === 4001) errorMsg = 'کاربر درخواست را رد کرد';
+            else if (error.message.includes('not installed')) errorMsg = 'SafePal یافت نشد';
+            
+            showNotification(`❌ ${errorMsg}`, 'error');
+        }
+    }
+
+    // ==================== CONTRACT INTERACTIONS ====================
+    async function updateContractData() {
+        if (!contract || !userAddress) return;
+        
+        try {
+            // دریافت موجودی کیف پول
+            const balance = await provider.getBalance(userAddress);
+            document.getElementById('balance').textContent = formatMatic(balance) + ' MATIC';
+            
+            // دریافت اطلاعات از قرارداد
+            const [totalUsers, poolBalance, specialPool, eligibleUsers] = await Promise.all([
+                contract.totalUsers(),
+                contract.poolBalance(),
+                contract.specialRewardPool(),
+                contract.eligiblePoolUserCount()
+            ]);
+            
+            // آپدیت UI
+            document.getElementById('totalUsers').textContent = totalUsers.toString();
+            document.getElementById('poolBalance').textContent = formatMatic(poolBalance);
+            document.getElementById('specialPool').textContent = formatMatic(specialPool);
+            document.getElementById('minerCount').textContent = eligibleUsers.toString();
+            
+            // دریافت اطلاعات کاربر
+            const userInfo = await contract.getUserInfo(userAddress);
+            console.log('📊 User info:', userInfo);
+            
+        } catch (error) {
+            console.warn('⚠️ Could not fetch all contract data:', error);
+        }
+    }
+
+    async function registerUser() {
+        if (!isConnected || !contract) {
+            showNotification('❌ لطفاً اول کیف پول را متصل کنید', 'error');
+            return;
+        }
+        
+        const uplineId = document.getElementById('uplineId').value;
+        const position = document.getElementById('position').value === 'true';
+        
+        if (!uplineId) {
+            showNotification('❌ لطفاً آیدی آپلاین را وارد کنید', 'error');
+            return;
+        }
+        
+        try {
+            const btn = document.getElementById('registerBtn');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<div class="advanced-loader"></div> در حال ثبت‌نام...';
+            btn.disabled = true;
+            
+            showNotification('⏳ ارسال تراکنش ثبت‌نام...', 'info');
+            
+            // دریافت entry fee از قرارداد
+            const entryFee = await contract.ENTRY_FEE();
+            
+            // ارسال تراکنش ثبت‌نام
+            const tx = await contract.register(uplineId, position, {
+                value: entryFee,
+                gasLimit: 300000
+            });
+            
+            showNotification('✅ تراکنش ارسال شد! منتظر تایید...', 'success');
+            
+            // منتظر تایید تراکنش
+            await tx.wait();
+            
+            showNotification('🎉 ثبت‌نام با موفقیت انجام شد!', 'success');
+            document.getElementById('uplineId').value = '';
+            
+            // آپدیت داده‌ها
+            await updateContractData();
+            
+        } catch (error) {
+            console.error('Registration error:', error);
+            showNotification(`❌ خطا: ${error.message}`, 'error');
+        } finally {
+            const btn = document.getElementById('registerBtn');
+            btn.innerHTML = '<i class="fas fa-check-circle"></i> ثبت‌نام در سیستم';
+            btn.disabled = false;
+        }
+    }
+
+    async function withdrawPool() {
+        if (!isConnected || !contract) {
+            showNotification('❌ کیف پول متصل نیست', 'error');
+            return;
+        }
+        
+        try {
+            const btn = document.getElementById('withdrawPoolBtn');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<div class="advanced-loader"></div> در حال برداشت...';
+            btn.disabled = true;
+            
+            showNotification('⏳ در حال برداشت از پول...', 'info');
+            
+            // بررسی قابل برداشت بودن
+            const isWithdrawable = await contract.isPoolWithdrawable();
+            if (!isWithdrawable) {
+                throw new Error('پول در حال حاضر قابل برداشت نیست');
+            }
+            
+            // برداشت از پول
+            const tx = await contract.withdrawPool({ gasLimit: 200000 });
+            await tx.wait();
+            
+            showNotification('✅ برداشت موفقیت‌آمیز بود!', 'success');
+            await updateContractData();
+            
+        } catch (error) {
+            console.error('Withdraw error:', error);
+            showNotification(`❌ خطا: ${error.message}`, 'error');
+        } finally {
+            const btn = document.getElementById('withdrawPoolBtn');
+            btn.innerHTML = '<i class="fas fa-money-bill-wave"></i> برداشت از پول';
+            btn.disabled = false;
+        }
+    }
+
+    async function contributeToMiner() {
+        const amount = document.getElementById('contributeAmount').value;
+        
+        if (!amount || parseFloat(amount) <= 0) {
+            showNotification('❌ لطفاً مقدار معتبر وارد کنید', 'error');
+            return;
+        }
+        
+        if (!isConnected || !contract) {
+            showNotification('❌ کیف پول متصل نیست', 'error');
+            return;
+        }
+        
+        try {
+            const btn = document.getElementById('contributeBtn');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<div class="advanced-loader"></div> در حال ارسال...';
+            btn.disabled = true;
+            
+            const value = ethers.utils.parseEther(amount);
+            
+            showNotification(`⏳ در حال ارسال ${amount} MATIC...`, 'info');
+            
+            const tx = await contract.contributeToMinerPool({ 
+                value,
+                gasLimit: 200000
+            });
+            
+            await tx.wait();
+            
+            showNotification('✅ کمک شما با موفقیت ثبت شد!', 'success');
+            document.getElementById('contributeAmount').value = '';
+            await updateContractData();
+            
+        } catch (error) {
+            console.error('Contribution error:', error);
+            showNotification(`❌ خطا: ${error.message}`, 'error');
+        } finally {
+            const btn = document.getElementById('contributeBtn');
+            btn.innerHTML = '<i class="fas fa-donate"></i> ارسال کمک';
+            btn.disabled = false;
+        }
+    }
+
+    // ==================== INITIALIZATION ====================
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('🚀 SPS Matrix DApp v5.0 (Contract Connected) Initializing...');
+        
+        // اتصال event listeners
+        document.getElementById('connectBtn').addEventListener('click', connectWallet);
+        document.getElementById('registerBtn').addEventListener('click', registerUser);
+        document.getElementById('withdrawPoolBtn').addEventListener('click', withdrawPool);
+        document.getElementById('withdrawSpecialBtn').addEventListener('click', withdrawPool);
+        document.getElementById('contributeBtn').addEventListener('click', contributeToMiner);
+        
+        // نمایش آدرس کوتاه قرارداد
+        document.getElementById('contractAddressShort').textContent = 
+            CONTRACT_ADDRESS.substring(0, 10) + '...' + CONTRACT_ADDRESS.substring(CONTRACT_ADDRESS.length - 8);
+        
+        // بررسی اتصال قبلی
+        if (typeof window.ethereum !== 'undefined') {
+            window.ethereum.request({ method: 'eth_accounts' })
+                .then(accounts => {
+                    if (accounts.length > 0) {
+                        console.log('✅ Already connected:', accounts[0]);
+                        setTimeout(() => connectWallet(), 1500);
+                    }
+                });
+        }
+        
+        // خوش‌آمدگویی
+        setTimeout(() => {
+            showNotification('🏊 به DApp استخر ایمن هوشمند خوش آمدید!', 'info', 3000);
+        }, 1000);
+    });
+</script>
 </body>
 </html>
