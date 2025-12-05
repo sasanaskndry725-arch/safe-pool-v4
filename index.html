@@ -5,17 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🏊 Safe Pool Smart | استخر ایمن هوشمند</title>
     
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- تنظیمات برای SafePal -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
     
-    <!-- فونت فارسی بهینه -->
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- فونت فارسی -->
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
     
     <!-- Ethers.js -->
     <script src="https://cdn.ethers.io/lib/ethers-5.7.umd.min.js"></script>
     
     <style>
-        /* پایه‌های مدرن */
         :root {
             --primary: #6366f1;
             --primary-glow: #818cf8;
@@ -48,7 +53,6 @@
             position: relative;
         }
         
-        /* افکت نور پس‌زمینه */
         .light-beam {
             position: fixed;
             width: 800px;
@@ -81,7 +85,6 @@
             100% { transform: translate(-150px, -150px) scale(1); }
         }
         
-        /* گرید نقاط متحرک */
         .particle-grid {
             position: fixed;
             width: 100%;
@@ -100,7 +103,6 @@
             100% { background-position: 80px 80px, 100px 100px; }
         }
         
-        /* کانتینر اصلی */
         .main-container {
             max-width: 500px;
             margin: 0 auto;
@@ -109,7 +111,6 @@
             z-index: 1;
         }
         
-        /* هدر با افکت ویژه */
         .main-header {
             text-align: center;
             margin-bottom: 40px;
@@ -210,7 +211,6 @@
             letter-spacing: 1.5px;
         }
         
-        /* کارت‌های شیشه‌ای پیشرفته */
         .glass-card {
             background: var(--glass);
             backdrop-filter: blur(30px);
@@ -288,7 +288,6 @@
             text-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
         }
         
-        /* دکمه‌های حرفه‌ای */
         .action-btn {
             width: 100%;
             padding: 26px;
@@ -367,7 +366,6 @@
             box-shadow: 0 20px 45px rgba(245, 158, 11, 0.5);
         }
         
-        /* پنل کیف پول */
         .wallet-panel {
             background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
             border-radius: 28px;
@@ -460,7 +458,6 @@
             100% { text-shadow: 0 5px 35px rgba(16, 185, 129, 0.7), 0 0 70px rgba(16, 185, 129, 0.6); }
         }
         
-        /* آمار شبکه */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -521,7 +518,6 @@
             font-weight: 600;
         }
         
-        /* فرم‌های پیشرفته */
         .form-group {
             margin: 30px 0;
             position: relative;
@@ -562,7 +558,6 @@
             transform: translateY(-5px);
         }
         
-        /* باکس ویژه */
         .special-box {
             background: linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(217, 119, 6, 0.25) 100%);
             border-radius: 28px;
@@ -611,7 +606,6 @@
             100% { text-shadow: 0 5px 35px rgba(245, 158, 11, 0.7), 0 0 80px rgba(245, 158, 11, 0.6); }
         }
         
-        /* فوتر */
         .main-footer {
             text-align: center;
             margin-top: 60px;
@@ -648,7 +642,6 @@
             font-size: 22px;
         }
         
-        /* نوتیفیکیشن پیشرفته */
         .advanced-notification {
             position: fixed;
             top: 40px;
@@ -691,7 +684,6 @@
             border-color: rgba(99, 102, 241, 0.5);
         }
         
-        /* اسکرول بار زیبا */
         ::-webkit-scrollbar {
             width: 12px;
         }
@@ -711,7 +703,6 @@
             background: linear-gradient(135deg, var(--primary), var(--accent));
         }
         
-        /* لودر حرفه‌ای */
         .advanced-loader {
             width: 28px;
             height: 28px;
@@ -723,7 +714,10 @@
             box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
         }
         
-        /* موبایل */
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
         @media (max-width: 480px) {
             .main-container { padding: 20px; }
             .main-header { padding: 35px 25px; }
@@ -738,18 +732,14 @@
     </style>
 </head>
 <body>
-    <!-- افکت‌های نور -->
     <div class="light-beam light-beam-1"></div>
     <div class="light-beam light-beam-2"></div>
     
-    <!-- گرید نقاط -->
     <div class="particle-grid"></div>
     
-    <!-- نوتیفیکیشن -->
     <div id="notification" class="advanced-notification"></div>
     
     <div class="main-container">
-        <!-- هدر اصلی -->
         <header class="main-header">
             <div class="logo-wrapper">
                 <div class="logo-orb">
@@ -768,7 +758,6 @@
             </div>
         </header>
         
-        <!-- کارت اتصال کیف پول -->
         <div class="glass-card">
             <div class="card-header">
                 <div class="header-icon">
@@ -819,7 +808,6 @@
             </div>
         </div>
         
-        <!-- کارت ثبت‌نام -->
         <div class="glass-card">
             <div class="card-header">
                 <div class="header-icon" style="background: linear-gradient(135deg, var(--secondary) 0%, #34d399 100%);">
@@ -863,7 +851,6 @@
             </button>
         </div>
         
-        <!-- کارت عملیات -->
         <div class="glass-card">
             <div class="card-header">
                 <div class="header-icon" style="background: linear-gradient(135deg, var(--accent) 0%, var(--accent-glow) 100%);">
@@ -898,7 +885,6 @@
             </button>
         </div>
         
-        <!-- کارت آمار شبکه -->
         <div class="glass-card">
             <div class="card-header">
                 <div class="header-icon">
@@ -929,7 +915,6 @@
             </div>
         </div>
         
-        <!-- فوتر -->
         <footer class="main-footer">
             <div style="margin-bottom: 30px;">
                 <div style="font-size: 20px; color: #cbd5e1; margin-bottom: 20px; font-weight: 800;">
@@ -1104,7 +1089,7 @@
                     document.getElementById('network').textContent = 'Polygon';
                 }
                 
-                // دریافت اطلاعات از قرارداد (با try/catch برای هر کدام)
+                // دریافت اطلاعات از قرارداد
                 try {
                     const totalUsers = await contract.totalUsers();
                     document.getElementById('totalUsers').textContent = totalUsers.toString();
